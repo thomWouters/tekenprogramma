@@ -11,6 +11,7 @@ class Cspray:
         self._list = [] # maakt een list met alle punten
         self._line_list = []
         self._distance_angle_list = []
+        self._copy_list = []
 
     def add(self,x,y):
         self._list.append((x,y)) # voegt een y en y punt toe aan de lijst
@@ -26,7 +27,7 @@ class Cspray:
             point2_y = self._list[i+1][1]
             delta_x = (point2_x-point1_x)**2
             delta_y = (point2_y-point1_y)**2
-            distance = (delta_x+delta_y)**.5
+            distance = ((delta_x+delta_y)**.5)/10
             ang = math.atan2(delta_y,delta_x)
             self._distance_angle_list.append([distance])
             self._line_list.append([point1,point2])
@@ -55,6 +56,8 @@ class Cspray:
 
         print(self._distance_angle_list)
         print(len(self._distance_angle_list))
+
+
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("ros_line.ui")
 
@@ -88,7 +91,6 @@ class MyApp(QtWidgets.QMainWindow):
         if distance > 20:
             self._line.add(point.x(), point.y())
             self._last_point = point_data
-            print('done')
 
 
     def viewMouseRelease(self,event):
